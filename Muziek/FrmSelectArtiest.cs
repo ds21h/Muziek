@@ -32,8 +32,9 @@ namespace Muziek {
         private void sVulArtLijst() {
 
             LstArtiest.Items.Clear();
-            for (int lTeller = 0; lTeller < GlobalData.gArtiesten.xAantal; lTeller++)
+            for (int lTeller = 0; lTeller < GlobalData.gArtiesten.xAantal; lTeller++) {
                 LstArtiest.Items.Add(GlobalData.gArtiesten.xArtiest(lTeller).xNaam);
+            }
         }
 
         private void TxtArtiest_TextChanged(object sender, EventArgs e) {

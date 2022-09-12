@@ -6,20 +6,17 @@ namespace Muziek {
 
     static class SQLHulp {
         internal static SqlParameter gParInit(string pNaam, int pWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.Int;
             lPar.Value = pWaarde;
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, int pWaarde, int pNullWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.Int;
@@ -29,77 +26,65 @@ namespace Muziek {
                 lPar.Value = pWaarde;
             }
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, long pWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.BigInt;
             lPar.Value = pWaarde;
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, string pWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.NVarChar;
             lPar.Value = pWaarde;
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, string pWaarde, string pNullWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.NVarChar;
-            if ((pWaarde ?? "") == (pNullWaarde ?? "")) {
+            if (pWaarde == pNullWaarde) {
                 lPar.Value = DBNull.Value;
             } else {
                 lPar.Value = pWaarde;
             }
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, bool pWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.Bit;
             lPar.Value = pWaarde;
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, DateTime pWaarde) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.DateTime;
             lPar.Value = pWaarde;
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
 
         internal static SqlParameter gParInit(string pNaam, DateTime pWaarde, bool pNull) {
-            SqlParameter gParInitRet = default;
-            var lPar = new SqlParameter();
+            SqlParameter lPar = new SqlParameter();
 
             lPar.ParameterName = pNaam;
             lPar.SqlDbType = SqlDbType.DateTime;
@@ -109,8 +94,7 @@ namespace Muziek {
                 lPar.Value = pWaarde;
             }
 
-            gParInitRet = lPar;
-            return gParInitRet;
+            return lPar;
         }
     }
 }

@@ -6,18 +6,27 @@ namespace Muziek {
 
         public static bool operator ==(PlaatId pPlaat1, PlaatId pPlaat2) {
             bool lResult;
+
             if (pPlaat1 is null) {
-                lResult = false;
-            } else if (pPlaat2 is null) {
-                lResult = false;
-            } else if ((pPlaat1.mType ?? "") == (pPlaat2.mType ?? "")) {
-                if (pPlaat1.mPlaatNummer == pPlaat2.mPlaatNummer) {
+                if (pPlaat2 is null) {
                     lResult = true;
                 } else {
                     lResult = false;
                 }
             } else {
-                lResult = false;
+                if (pPlaat2 is null) {
+                    lResult = false;
+                } else {
+                    if (pPlaat1.mType == pPlaat2.mType) {
+                        if (pPlaat1.mPlaatNummer == pPlaat2.mPlaatNummer) {
+                            lResult = true;
+                        } else {
+                            lResult = false;
+                        }
+                    } else {
+                        lResult = false;
+                    }
+                }
             }
 
             return lResult;
@@ -25,36 +34,21 @@ namespace Muziek {
 
         public static bool operator !=(PlaatId pPlaat1, PlaatId pPlaat2) {
             bool lResult;
-            if (pPlaat1 is null) {
-                lResult = false;
-            } else if (pPlaat2 is null) {
-                lResult = false;
-            } else if ((pPlaat1.mType ?? "") == (pPlaat2.mType ?? "")) {
-                if (pPlaat1.mPlaatNummer == pPlaat2.mPlaatNummer) {
-                    lResult = false;
-                } else {
-                    lResult = true;
-                }
-            } else {
-                lResult = true;
-            }
+
+            lResult = !(pPlaat1 == pPlaat2);    
 
             return lResult;
         }
 
         public string xType {
             get {
-                string xTypeRet = default;
-                xTypeRet = mType;
-                return xTypeRet;
+                return mType;
             }
         }
 
         public int xPlaatNummer {
             get {
-                int xPlaatNummerRet = default;
-                xPlaatNummerRet = mPlaatNummer;
-                return xPlaatNummerRet;
+                return mPlaatNummer;
             }
         }
 

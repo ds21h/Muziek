@@ -37,7 +37,7 @@ namespace Muziek {
                     } else {
                         lPlaatNummer = (int)lAntwoord;
                     }
-                } catch (Exception ex) {
+                } catch (Exception) {
                     lPlaatNummer = -1;
                 }
 
@@ -87,7 +87,7 @@ namespace Muziek {
                         }
 
                         lRdr.Close();
-                    } catch (Exception ex) {
+                    } catch (Exception) {
                         lDrager = null;
                     }
 

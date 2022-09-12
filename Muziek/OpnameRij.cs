@@ -13,17 +13,13 @@ namespace Muziek {
 
         public int xRij {
             get {
-                int xRijRet = default;
-                xRijRet = mRij;
-                return xRijRet;
+                return mRij;
             }
         }
 
         internal Artiest xArtiest {
             get {
-                Artiest xArtiestRet = default;
-                xArtiestRet = mArtiest;
-                return xArtiestRet;
+                return mArtiest;
             }
             set {
                 mArtiest = value;
@@ -32,9 +28,7 @@ namespace Muziek {
 
         public Opname xOpname {
             get {
-                Opname xOpnameRet = default;
-                xOpnameRet = mOpname;
-                return xOpnameRet;
+                return mOpname;
             }
         }
     }

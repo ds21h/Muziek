@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Microsoft.VisualBasic;
+//using Microsoft.VisualBasic;
 
 namespace Muziek {
 
@@ -19,9 +19,7 @@ namespace Muziek {
 
         public string xType {
             get {
-                string xTypeRet = default;
-                xTypeRet = mType;
-                return xTypeRet;
+                return mType;
             }
             set {
                 mType = value;
@@ -30,9 +28,7 @@ namespace Muziek {
 
         public int xPlaatNummer {
             get {
-                int xPlaatNummerRet = default;
-                xPlaatNummerRet = mPlaatNummer;
-                return xPlaatNummerRet;
+                return mPlaatNummer;
             }
             set {
                 mPlaatNummer = value;
@@ -41,9 +37,7 @@ namespace Muziek {
 
         public int xKant {
             get {
-                int xKantRet = default;
-                xKantRet = mKant;
-                return xKantRet;
+                return mKant;
             }
             set {
                 if (value > 0) {
@@ -54,9 +48,7 @@ namespace Muziek {
 
         public int xVolgNummer {
             get {
-                int xVolgNummerRet = default;
-                xVolgNummerRet = mVolgNummer;
-                return xVolgNummerRet;
+                return mVolgNummer;
             }
             set {
                 if (value > 0) {
@@ -67,9 +59,7 @@ namespace Muziek {
 
         public int xArtiestNummer {
             get {
-                int xArtiestNummerRet = default;
-                xArtiestNummerRet = mArtiestNummer;
-                return xArtiestNummerRet;
+                return mArtiestNummer;
             }
             set {
                 mArtiestNummer = value;
@@ -78,12 +68,10 @@ namespace Muziek {
 
         public string xTitel {
             get {
-                string xTitelRet = default;
-                xTitelRet = mTitel;
-                return xTitelRet;
+                return mTitel;
             }
             set {
-                mTitel = Strings.Trim(value);
+                mTitel = value.Trim();
             }
         }
 
@@ -103,13 +91,12 @@ namespace Muziek {
             mKant = pKant;
             mVolgNummer = pVolgNummer;
             mArtiestNummer = pArtiestNummer;
-            mTitel = Strings.Trim(pTitel);
-            mUitvoering = Strings.Trim(pUitvoering);
+            mTitel = pTitel.Trim();
+            mUitvoering = pUitvoering.Trim();
         }
 
 
         public int xNieuweOpname() {
-            int xNieuweOpnameRet = default;
             int lResult;
 
             lResult = sTestOpname();
@@ -117,12 +104,10 @@ namespace Muziek {
                 lResult = sNieuweOpname();
             }
 
-            xNieuweOpnameRet = lResult;
-            return xNieuweOpnameRet;
+            return lResult;
         }
 
         private int sTestOpname() {
-            int sTestOpnameRet = default;
             int lResult;
 
             lResult = Resultaat.ResultObjectNietCorrect;
@@ -138,12 +123,10 @@ namespace Muziek {
                 }
             }
 
-            sTestOpnameRet = lResult;
-            return sTestOpnameRet;
+            return lResult;
         }
 
         private int sNieuweOpname() {
-            int sNieuweOpnameRet = default;
             int lResult;
             var lComm = new SqlCommand();
             SqlParameter lParType;
@@ -188,8 +171,7 @@ namespace Muziek {
 
             }
 
-            sNieuweOpnameRet = lResult;
-            return sNieuweOpnameRet;
+            return lResult;
         }
 
     }

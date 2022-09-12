@@ -2,7 +2,6 @@
 using System.Drawing.Printing;
 using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 using System.Data.SqlClient;
 
 namespace Muziek {
@@ -57,7 +56,7 @@ namespace Muziek {
                 try {
                     lConn.Open();
                 } catch (Exception ex) {
-                    Interaction.MsgBox("SQL-server niet beschikbaar");
+                    MessageBox.Show("SQL-server niet beschikbaar");
                     Environment.Exit(0);
                 }
             }
@@ -77,8 +76,7 @@ namespace Muziek {
 
             sVulArtLijst();
             lIndex = GlobalData.gArtiesten.xArtiestPositie(mZoekArtiest);
-            if (lIndex <= 0) {
-                // LstArtiest.SelectedIndex = -1
+            if (lIndex >= 0) {
                 LstArtiest.SelectedIndex = lIndex;
             } else {
                 mSelArtiest = null;
@@ -88,14 +86,15 @@ namespace Muziek {
         private void sVulArtLijst() {
 
             LstArtiest.Items.Clear();
-            for (int lTeller = 0, loopTo = GlobalData.gArtiesten.xAantal - 1; lTeller <= loopTo; lTeller++)
-                LstArtiest.Items.Add(GlobalData.gArtiesten.xArtiest(lTeller).xNaam);
+            for (int bTeller = 0; bTeller < GlobalData.gArtiesten.xAantal; bTeller++) {
+                LstArtiest.Items.Add(GlobalData.gArtiesten.xArtiest(bTeller).xNaam);
+            }
         }
 
         private void TxtArtiest_TextChanged(object sender, EventArgs e) {
             int lIndex;
 
-            lIndex = GlobalData.gArtiesten.xArtiestPositie(Strings.Trim(TxtArtiest.Text));
+            lIndex = GlobalData.gArtiesten.xArtiestPositie(TxtArtiest.Text.Trim());
             if (lIndex < 0) {
                 mSelArtiest = null;
             } else {
@@ -163,8 +162,7 @@ namespace Muziek {
 
             lOpname = mSelArtiest.xDragersMetArtiest;
 
-            var loopTo = mDispTeller;
-            for (lRijIndex = 0; lRijIndex <= loopTo; lRijIndex++) {
+            for (lRijIndex = 0; lRijIndex <= mDispTeller; lRijIndex++) {
                 mDispLijst[lRijIndex].mTxtType.Visible = false;
                 mDispLijst[lRijIndex].mTxtPlNummer.Visible = false;
                 mDispLijst[lRijIndex].mTxtKant.Visible = false;
@@ -172,22 +170,22 @@ namespace Muziek {
                 mDispLijst[lRijIndex].mTxtTitel.Visible = false;
             }
 
-            for (int lOpnIndex = mEersteRij, loopTo1 = lOpname.Length - 1; lOpnIndex <= loopTo1; lOpnIndex++) {
+            for (int lOpnIndex = mEersteRij; lOpnIndex < lOpname.Length; lOpnIndex++) {
                 lRijIndex = lOpnIndex - mEersteRij;
                 if (lRijIndex > mAantalRijen - 1) {
                     break;
                 }
                 while (lRijIndex > mDispTeller) {
-                    mDispTeller = mDispTeller + 1;
+                    mDispTeller++;
                     if (mDispTeller > mDispMax) {
-                        mDispMax = mDispMax + 10;
+                        mDispMax += 10;
                         Array.Resize(ref mDispLijst, mDispMax + 1);
                     }
 
                     lRijTop = mRegelTop + mDispTeller * mRijHoogte;
 
                     mDispLijst[mDispTeller].mTxtType = new TextBox();
-                    mDispLijst[mDispTeller].mTxtType.Name = "TxtType" + Strings.Format(mDispTeller, "000");
+                    mDispLijst[mDispTeller].mTxtType.Name = "TxtType" + mDispTeller.ToString("000");
                     mDispLijst[mDispTeller].mTxtType.Width = TxtTypeV.Width;
                     mDispLijst[mDispTeller].mTxtType.Visible = false;
                     mDispLijst[mDispTeller].mTxtType.Enter += hTxt_Enter;
@@ -197,7 +195,7 @@ namespace Muziek {
                     mDispLijst[mDispTeller].mTxtType.Location = lPos;
 
                     mDispLijst[mDispTeller].mTxtPlNummer = new TextBox();
-                    mDispLijst[mDispTeller].mTxtPlNummer.Name = "TxtPlNummer" + Strings.Format(mDispTeller, "000");
+                    mDispLijst[mDispTeller].mTxtPlNummer.Name = "TxtPlNummer" + mDispTeller.ToString("000");
                     mDispLijst[mDispTeller].mTxtPlNummer.Width = TxtNrV.Width;
                     mDispLijst[mDispTeller].mTxtPlNummer.Visible = false;
                     mDispLijst[mDispTeller].mTxtPlNummer.Enter += hTxt_Enter;
@@ -207,7 +205,7 @@ namespace Muziek {
                     mDispLijst[mDispTeller].mTxtPlNummer.Location = lPos;
 
                     mDispLijst[mDispTeller].mTxtKant = new TextBox();
-                    mDispLijst[mDispTeller].mTxtKant.Name = "TxtKant" + Strings.Format(mDispTeller, "000");
+                    mDispLijst[mDispTeller].mTxtKant.Name = "TxtKant" + mDispTeller.ToString("000");
                     mDispLijst[mDispTeller].mTxtKant.Width = TxtKantV.Width;
                     mDispLijst[mDispTeller].mTxtKant.Visible = false;
                     mDispLijst[mDispTeller].mTxtKant.Enter += hTxt_Enter;
@@ -217,7 +215,7 @@ namespace Muziek {
                     mDispLijst[mDispTeller].mTxtKant.Location = lPos;
 
                     mDispLijst[mDispTeller].mTxtVolgNummer = new TextBox();
-                    mDispLijst[mDispTeller].mTxtVolgNummer.Name = "TxtVolgNummer" + Strings.Format(mDispTeller, "000");
+                    mDispLijst[mDispTeller].mTxtVolgNummer.Name = "TxtVolgNummer" + mDispTeller.ToString("000");
                     mDispLijst[mDispTeller].mTxtVolgNummer.Width = TxtVnrV.Width;
                     mDispLijst[mDispTeller].mTxtVolgNummer.Visible = false;
                     mDispLijst[mDispTeller].mTxtVolgNummer.Enter += hTxt_Enter;
@@ -227,7 +225,7 @@ namespace Muziek {
                     mDispLijst[mDispTeller].mTxtVolgNummer.Location = lPos;
 
                     mDispLijst[mDispTeller].mTxtTitel = new TextBox();
-                    mDispLijst[mDispTeller].mTxtTitel.Name = "TxtTitel" + Strings.Format(mDispTeller, "000");
+                    mDispLijst[mDispTeller].mTxtTitel.Name = "TxtTitel" + mDispTeller.ToString("000");
                     mDispLijst[mDispTeller].mTxtTitel.Width = TxtTitelV.Width;
                     mDispLijst[mDispTeller].mTxtTitel.Visible = false;
                     mDispLijst[mDispTeller].mTxtTitel.Enter += hTxt_Enter;
@@ -282,7 +280,7 @@ namespace Muziek {
         private void sMarkeerSelectie() {
             PlaatId lPlaatId;
 
-            for (int lRijIndex = 0, loopTo = mDispTeller; lRijIndex <= loopTo; lRijIndex++) {
+            for (int lRijIndex = 0; lRijIndex <= mDispTeller; lRijIndex++) {
                 lPlaatId = (PlaatId)mDispLijst[lRijIndex].mTxtType.Tag;
                 if (lPlaatId == mSelPlaat) {
                     mDispLijst[lRijIndex].mTxtType.BackColor = TxtTypeV.BackColor;
@@ -308,11 +306,13 @@ namespace Muziek {
 
         private void SplMuziek_Panel2_Resize(object sender, EventArgs e) {
             int lBreedteTitel;
+
             if (mGeladen) {
                 lBreedteTitel = SplMuziek.Panel2.Width - TxtTitelV.Location.X - mRechtMarge;
                 TxtTitelV.Width = lBreedteTitel;
-                for (int lTeller = 0, loopTo = mDispTeller; lTeller <= loopTo; lTeller++)
+                for (int lTeller = 0, loopTo = mDispTeller; lTeller <= loopTo; lTeller++) {
                     mDispLijst[lTeller].mTxtTitel.Width = lBreedteTitel;
+                }
                 sZetGrootte();
             }
         }
@@ -321,7 +321,7 @@ namespace Muziek {
             int lHoogte;
 
             lHoogte = SplMuziek.Panel2.Height - TxtTypeV.Location.Y - cPagMarge;
-            mAantalRijen = (int)Math.Round(Conversion.Int(lHoogte / (double)mRijHoogte));
+            mAantalRijen = lHoogte / mRijHoogte;
 
             if (mSelArtiest != null) {
                 sSchrijfSelectie();
@@ -360,12 +360,12 @@ namespace Muziek {
 
         private void TsmArtNw_Click(object sender, EventArgs e) {
             FrmArtiest lFrmArtiest;
-            int lResult;
+            DialogResult lResult;
 
             lFrmArtiest = new FrmArtiest();
             if (lFrmArtiest.xInit(FrmArtiest.AktieNieuw, null) == Resultaat.ResultOK) {
-                lResult = (int)lFrmArtiest.ShowDialog();
-                if (lResult == (int)DialogResult.OK) {
+                lResult = lFrmArtiest.ShowDialog();
+                if (lResult == DialogResult.OK) {
                     mZoekArtiest = lFrmArtiest.xArtiest;
                     sInitArtiesten();
                 }
@@ -374,14 +374,14 @@ namespace Muziek {
 
         private void TsmArtVw_Click(object sender, EventArgs e) {
             FrmArtiest lFrmArtiest;
-            int lResult;
+            DialogResult lResult;
             string lNaam;
 
             lFrmArtiest = new FrmArtiest();
             if (lFrmArtiest.xInit(FrmArtiest.AktieVerwijder, mSelArtiest) == Resultaat.ResultOK) {
                 lNaam = mSelArtiest.xAchterNaam;
-                lResult = (int)lFrmArtiest.ShowDialog();
-                if (lResult == (int)DialogResult.OK) {
+                lResult = lFrmArtiest.ShowDialog();
+                if (lResult == DialogResult.OK) {
                     mZoekArtiest = mSelArtiest;
                     sInitArtiesten();
                     TxtArtiest.Text = lNaam;
@@ -391,13 +391,13 @@ namespace Muziek {
 
         private void TsmDrNw_Click(object sender, EventArgs e) {
             FrmPlaat lFrmPlaat;
-            int lResult;
+            DialogResult lResult;
 
             lFrmPlaat = new FrmPlaat();
             lFrmPlaat.xInit(FrmPlaat.AktieNieuw, null);
             lFrmPlaat.xArtiest = mSelArtiest;
-            lResult = (int)lFrmPlaat.ShowDialog();
-            if (lResult == (int)DialogResult.OK) {
+            lResult = lFrmPlaat.ShowDialog();
+            if (lResult == DialogResult.OK) {
                 mZoekArtiest = lFrmPlaat.xArtiest;
                 sInitArtiesten();
             }
@@ -405,12 +405,12 @@ namespace Muziek {
 
         private void TsmDrWz_Click(object sender, EventArgs e) {
             FrmPlaat lFrmPlaat;
-            int lResult;
+            DialogResult lResult;
 
             lFrmPlaat = new FrmPlaat();
             lFrmPlaat.xInit(FrmPlaat.AktieWijzig, mSelPlaat);
-            lResult = (int)lFrmPlaat.ShowDialog();
-            if (lResult == (int)DialogResult.OK) {
+            lResult = lFrmPlaat.ShowDialog();
+            if (lResult == DialogResult.OK) {
                 mZoekArtiest = lFrmPlaat.xArtiest;
                 sInitArtiesten();
             }
@@ -418,12 +418,12 @@ namespace Muziek {
 
         private void TsmDrVw_Click(object sender, EventArgs e) {
             FrmPlaat lFrmPlaat;
-            int lResult;
+            DialogResult lResult;
 
             lFrmPlaat = new FrmPlaat();
             lFrmPlaat.xInit(FrmPlaat.AktieVerwijder, mSelPlaat);
-            lResult = (int)lFrmPlaat.ShowDialog();
-            if (lResult == (int)DialogResult.OK) {
+            lResult = lFrmPlaat.ShowDialog();
+            if (lResult == DialogResult.OK) {
                 mZoekArtiest = mSelArtiest;
                 sInitArtiesten();
             }
@@ -461,9 +461,9 @@ namespace Muziek {
                 if (lRdr.HasRows) {
                     while (lRdr.Read()) {
                         lDrager = GlobalData.gDragers.xMaakDrager(lRdr);
-                        mDragerTeller = mDragerTeller + 1;
+                        mDragerTeller++;
                         if (mDragerTeller > mMaxDrager) {
-                            mMaxDrager = mMaxDrager + 10;
+                            mMaxDrager += 10;
                             Array.Resize(ref mDragers, mMaxDrager + 1);
                         }
                         mDragers[mDragerTeller] = lDrager;
@@ -493,18 +493,18 @@ namespace Muziek {
             lPunt = new Point(pPageEvent.MarginBounds.Left, pPageEvent.MarginBounds.Top);
             lOnder = pPageEvent.MarginBounds.Bottom;
             lMeerPaginas = false;
-            for (int lTeller = mHuidigDrager + 1, loopTo = mDragerTeller; lTeller <= loopTo; lTeller++) {
+            for (int bTeller = mHuidigDrager + 1; bTeller <= mDragerTeller; bTeller++) {
                 if (lPunt.Y + lGrootte.Height > lOnder) {
                     lMeerPaginas = true;
                     break;
                 }
-                mHuidigDrager = lTeller;
-                lDrager = mDragers[lTeller];
+                mHuidigDrager = bTeller;
+                lDrager = mDragers[bTeller];
                 lTitel1 = "";
                 lTitel2 = "";
                 lArtiest = "";
                 lArtTeller = -1;
-                for (int lOpnameTel = 0, loopTo1 = lDrager.xAantalOpnames - 1; lOpnameTel <= loopTo1; lOpnameTel++) {
+                for (int lOpnameTel = 0; lOpnameTel < lDrager.xAantalOpnames; lOpnameTel++) {
                     lOpname = lDrager.xOpname(lOpnameTel);
                     if (lOpname.xKant == 1) {
                         if (string.IsNullOrEmpty(lTitel1)) {
@@ -512,13 +512,15 @@ namespace Muziek {
                         } else {
                             lTitel1 = lTitel1 + " / " + lOpname.xTitel;
                         }
-                    } else if (string.IsNullOrEmpty(lTitel2)) {
-                        lTitel2 = lOpname.xTitel;
                     } else {
-                        lTitel2 = lTitel2 + " / " + lOpname.xTitel;
+                        if (string.IsNullOrEmpty(lTitel2)) {
+                            lTitel2 = lOpname.xTitel;
+                        } else {
+                            lTitel2 = lTitel2 + " / " + lOpname.xTitel;
+                        }
                     }
                     lNieuw = true;
-                    for (int lXTeller = 0, loopTo2 = lArtTeller; lXTeller <= loopTo2; lXTeller++) {
+                    for (int lXTeller = 0; lXTeller <= lArtTeller; lXTeller++) {
                         if (lArtiesten[lXTeller] == lOpname.xArtiestNummer) {
                             lNieuw = false;
                             break;
@@ -526,12 +528,12 @@ namespace Muziek {
                     }
                     if (lNieuw) {
                         if (lArtTeller < 5) {
-                            lArtTeller = lArtTeller + 1;
+                            lArtTeller++;
                             lArtiesten[lArtTeller] = lOpname.xArtiestNummer;
                         }
                     }
                 }
-                for (int lXTeller = 0, loopTo3 = lArtTeller; lXTeller <= loopTo3; lXTeller++) {
+                for (int lXTeller = 0; lXTeller <= lArtTeller; lXTeller++) {
                     lArt = GlobalData.gArtiesten.xZoekArtiest(lArtiesten[lXTeller]);
                     if (lArt != null) {
                         if (string.IsNullOrEmpty(lArtiest)) {
@@ -544,10 +546,10 @@ namespace Muziek {
                 lGrootte = sSchrijfLabel(lPunt, pPageEvent.Graphics, lTitel1, lTitel2, lArtiest);
                 lDrager.xLabel = false;
                 lDrager.xWijzigDrager();
-                lPunt.X = lPunt.X + lGrootte.Width;
+                lPunt.X += lGrootte.Width;
                 if (lPunt.X + lGrootte.Width > pPageEvent.MarginBounds.Right) {
                     lPunt.X = pPageEvent.MarginBounds.Left;
-                    lPunt.Y = lPunt.Y + lGrootte.Height;
+                    lPunt.Y += lGrootte.Height;
                 }
             }
             pPageEvent.HasMorePages = lMeerPaginas;
@@ -574,19 +576,19 @@ namespace Muziek {
             string lTitel2;
             string lArtiest;
 
-            lBreedte = (int)Math.Round(Conversion.Int(cBreedte / 2.54d));
-            lHoogte = (int)Math.Round(Conversion.Int(cHoogte / 2.54d));
-            lMargeTitel = (int)Math.Round(Conversion.Int(cMargeTitel / 2.54d));
-            lMargeArtiest = (int)Math.Round(Conversion.Int(cMargeArtiest / 2.54d));
-            lMargeRechts = (int)Math.Round(Conversion.Int(cMargeRechts / 2.54d));
+            lBreedte = (int)(cBreedte / 2.54d);
+            lHoogte = (int)(cHoogte / 2.54d);
+            lMargeTitel = (int)(cMargeTitel / 2.54d);
+            lMargeArtiest = (int)(cMargeArtiest / 2.54d);
+            lMargeRechts = (int)(cMargeRechts / 2.54d);
             lGrootte = new Size(lBreedte, lHoogte);
             lPen = new Pen(Color.Black, 1f);
             lPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
             pGraphic.DrawRectangle(lPen, pPunt.X, pPunt.Y, lBreedte, lHoogte);
 
-            lHoogteTitel = (int)Math.Round(Conversion.Int((lHoogte - mPrintFont.Height) / 2d));
-            lMargeTitelV = (int)Math.Round(Conversion.Int((lHoogteTitel - mPrintFont.Height) / 2d));
+            lHoogteTitel = (lHoogte - mPrintFont.Height) / 2;
+            lMargeTitelV = (lHoogteTitel - mPrintFont.Height) / 2;
             lPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
             pGraphic.DrawLine(lPen, pPunt.X + lMargeTitel, pPunt.Y + lHoogteTitel, pPunt.X + lBreedte - lMargeRechts, pPunt.Y + lHoogteTitel);
             pGraphic.DrawLine(lPen, pPunt.X + lMargeTitel, pPunt.Y + lHoogteTitel + mPrintFont.Height, pPunt.X + lBreedte - lMargeRechts, pPunt.Y + lHoogteTitel + mPrintFont.Height);
@@ -603,7 +605,6 @@ namespace Muziek {
         }
 
         private string sPasTekst(string pTekst, int pBreedte, Graphics pGraphic) {
-            string sPasTekstRet = default;
             string lInvoer;
             string lWerk;
             SizeF lGrootte;
@@ -615,13 +616,12 @@ namespace Muziek {
                 if (lGrootte.Width < pBreedte) {
                     break;
                 }
-                lInvoer = Strings.Mid(lInvoer, 1, lInvoer.Length - 1);
+                lInvoer = lInvoer.Substring(0, lInvoer.Length - 1);
                 lWerk = lInvoer + " ...";
             }
             while (true);
 
-            sPasTekstRet = lWerk;
-            return sPasTekstRet;
+            return lWerk;
         }
 
         private void hTxt_MouseClick(object sender, EventArgs e) {
